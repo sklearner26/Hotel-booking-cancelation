@@ -6,6 +6,10 @@ import pandas as pd
 
 from sklearn.model_selection import train_test_split
 from dataclasses import dataclass
+
+from src.components.data_transformation import DataTransformation
+from src.components.data_transformation import DataTransformationConfig
+
 '''
 from src.components.data_transformation import DataTransformation
 from src.components.data_transformation import DataTransformationConfig
@@ -28,6 +32,10 @@ class DataIngestion:
         logging.info("Entered the data ingestion method or component")
         try:
             df=pd.read_csv('notebook/data/hotel_booking.csv')
+            #Droping unusual columns
+            df.drop(['name','email','phone-number','credit_card','reservation_status_date','agent','company'],axis=1,inplace=True)
+            df.dropna(inplace=True)
+            df = df.drop(df[(df['adults']==0) & (df['children']==0) & (df['babies']==0)].index)
             logging.info('Read the dataset as dataframe')
 
             os.makedirs(os.path.dirname(self.ingestion_config.train_data_path),exist_ok=True)
@@ -55,10 +63,9 @@ if __name__=="__main__":
     obj=DataIngestion()
     train_data,test_data=obj.initiate_data_ingestion()
 
-'''
     data_transformation=DataTransformation()
     train_arr,test_arr,_=data_transformation.initiate_data_transformation(train_data,test_data)
-
+'''
     modeltrainer=ModelTrainer()
     print(modeltrainer.initiate_model_trainer(train_arr,test_arr))
 
