@@ -82,3 +82,10 @@ Using above dataset I have to find different factors that affect booking to be c
 4.Take care more for transient-party type customer
 
 5.Try to provide customer demanded request 
+
+###Some visualisation
+
+![](images/Customer_type.png)
+![](images/data_balance.png)
+![](images/deposite_type.png)
+![](images/hotel_analysis.png)
